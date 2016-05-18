@@ -1,0 +1,32 @@
+{
+  "name": "inversify-chrome-devtools",
+  "version": "1.0.0",
+  "description": "A chrome extension that aims to help developers working with InversifyJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inversify/inversify-chrome-devtools.git"
+  },
+  "keywords": [
+    "chrome",
+    "extension",
+    "inversifyjs",
+    "dependency",
+    "inversion",
+    "control",
+    "ioc"
+  ],
+  "author": "Remo H. Jansen <remo.jansen@wolksoftware.com> (http://www.remojansen.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inversify/inversify-chrome-devtools/issues"
+  },
+  "homepage": "https://github.com/inversify/inversify-chrome-devtools#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.1"
+  }
+}
