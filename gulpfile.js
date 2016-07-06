@@ -10,7 +10,9 @@ var gulp        = require("gulp"),
     runSequence = require("run-sequence"),
     browserify  = require("browserify"),
     source      = require("vinyl-source-stream"),
-    buffer      = require("vinyl-buffer");
+    buffer      = require("vinyl-buffer"),
+    cleanCSS    = require("gulp-clean-css"),
+    concat      = require("gulp-concat");
 
 //******************************************************************************
 //* LINT ALL
@@ -52,7 +54,7 @@ gulp.task("build", function() {
 gulp.task("bundle", function() {
 
   var mainFilePath = "temp/main.js";
-  var outputFolder   = "bundle";
+  var outputFolder   = "dist";
   var outputFileName = "app.js";
 
   var bundler = browserify({
@@ -68,6 +70,45 @@ gulp.task("bundle", function() {
 });
 
 //******************************************************************************
+//* BUNDLE CSS
+//******************************************************************************
+
+gulp.task("bundle-css", [ "copy-fonts", "copy-main", "copy-media" ], function() {
+
+    return gulp.src([
+        "node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "node_modules/font-awesome/css/font-awesome.min.css",
+        "node_modules/inversify-devtools/style/scrollbar.css",
+        "node_modules/inversify-devtools/style/tree.css",
+        "node_modules/inversify-devtools/style/site.css"
+    ])
+    .pipe(concat("app.css"))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest("dist/"));
+
+});
+
+gulp.task("copy-fonts", function() {
+    return gulp.src([
+        "node_modules/font-awesome/fonts/**/*"
+    ]).pipe(gulp.dest("dist/fonts"));
+});
+
+gulp.task("copy-media", function() {
+    return gulp.src([
+        "media/**/*"
+    ]).pipe(gulp.dest("dist/media"));
+});
+
+gulp.task("copy-main", function() {
+    return gulp.src([
+        "devtools.html",
+        "index.html",
+        "manifest.json"
+    ]).pipe(gulp.dest("dist"));
+});
+
+//******************************************************************************
 //* TASK GROUPS
 //******************************************************************************
 gulp.task("default", function (cb) {
@@ -75,5 +116,6 @@ gulp.task("default", function (cb) {
     "lint",
     "build",
     "bundle",
+    "bundle-css",
     cb);
 });
